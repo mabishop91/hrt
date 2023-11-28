@@ -1,1 +1,57 @@
-Testing
+#How would you describe your knowledge of Linux?
+Advanced to Expert
+I am very well versed and have many years of experience with all different flavors/distros of both Linux and Unix. I chose Advanced to Expert, and not just Expert, because I don't recall every detail from memory and sometimes refer to my notes.
+
+
+#How would you describe your knowledge of Windows?
+Intermediate
+I have worked with plenty of Windows machines, but it has never been my primary responsibility as an engineer.
+
+
+#How would you describe your knowledge of MacOS?
+Basic
+I've never 'worked' on MacOS machines, but I have basic knowledge in the sense that I've always performed my work on Mac hardware and, given MacOS and Linux similarities, can leverage my Linux expertise to navigate MacOS. 
+
+
+#How would you describe your ability to work with the command-line?
+Advanced to Expert
+Similar to the first questions regarding Linux, nearly my entire professional career I've spent a large majority of my time on the command line, but I do still refer to my notes or rely on Google here and there when I get stuck , hence why I did not pick strictly 'Expert.'
+
+
+#What is your operating system of choice to work with the command-line?
+Linux
+
+
+#How would you describe your level of scripting/programming ability?
+Basic to Intermediate
+I've written plenty of shell scripts in my time at General Motors as a Linux Admin and then Engineer, but haven't done a ton of shell scripting in my new role outside of small personal automations.
+I've taking various trainings on coding, including Codecademy's Python3 course.
+I've got production code in our environment here at Salesforce, some basic stuff that I wrote alone, and some very advanced stuff that I wrote/co-authored in cooperation with more experienced programmers.
+
+
+#Do you consider yourself someone who writes scripts or programs/codes?
+Yes and no. I've done this plenty of times in highly available, highly distributed environments at two Fortune500 companies, but I don't consider myself as someone who's daily role is to script or program/code. That said, I am looking for the opportunity to develop this skill further in my next role.
+
+
+#Language of choice?
+Python
+ 
+
+#Explain file permission in Linux. 
+
+
+ 
+#Given a file, write a command sequence in Linux to find the count of each word. (hint - we are not looking for a simple word count of the whole file, rather how many times each word occurs)
+
+ 
+
+#What do you do when someone tells you x is slow on a host?
+
+
+#If you were designing a new web application environment from the ground up, what kind(s) of hardware, OS, applications, storage, network, etc. would you use, and why?
+
+
+#Please describe a systems maintenance or operations workflow that you automated?
+#What problem did this solve?
+#What programming languages or tools did you use?
+#What was the outcome?
