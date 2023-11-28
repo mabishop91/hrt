@@ -15,7 +15,7 @@ I've never 'worked' on MacOS machines, but I have basic knowledge in the sense t
 
 #How would you describe your ability to work with the command-line?
 Advanced to Expert
-Similar to the first questions regarding Linux, nearly my entire professional career I've spent a large majority of my time on the command line, but I do still refer to my notes or rely on Google here and there when I get stuck , hence why I did not pick strictly 'Expert.'
+Similar to the first questions regarding Linux, nearly my entire professional career I've spent a large majority of my time on the command line, but I do still refer to my notes or rely on Google here and there when I get stuck, hence why I did not pick strictly 'Expert.'
 
 
 #What is your operating system of choice to work with the command-line?
@@ -25,33 +25,145 @@ Linux
 #How would you describe your level of scripting/programming ability?
 Basic to Intermediate
 I've written plenty of shell scripts in my time at General Motors as a Linux Admin and then Engineer, but haven't done a ton of shell scripting in my new role outside of small personal automations.
-I've taking various trainings on coding, including Codecademy's Python3 course.
-I've got production code in our environment here at Salesforce, some basic stuff that I wrote alone, and some very advanced stuff that I wrote/co-authored in cooperation with more experienced programmers.
+I've taken various trainings on coding, including Codecademy's Python3 course.
+I've got production code in our environment here at Salesforce; some basic stuff that I wrote alone, and some very advanced stuff that I wrote/co-authored in cooperation with more experienced programmers.
 
 
 #Do you consider yourself someone who writes scripts or programs/codes?
-Yes and no. I've done this plenty of times in highly available, highly distributed environments at two Fortune500 companies, but I don't consider myself as someone who's daily role is to script or program/code. That said, I am looking for the opportunity to develop this skill further in my next role.
+Yes and no. I've done this plenty of times in highly available, highly distributed environments, both first-party/on-prem and cloud based, at two Fortune500 companies, but I don't consider myself someone who's daily role is to script or program/code. That said, I am looking for the opportunity to develop this skill further in my next role.
 
 
 #Language of choice?
 Python
- 
+
 
 #Explain file permission in Linux. 
-
+File permissions define WHO can do WHAT to a file or directory, similar to Bucket or IAM policies on Amazon S3 resources.
+File permissions can be broken down into three sets and three types:
+	Sets = owner, group, and others/users
+	Types = read (r), write (w), and execute (x)
+Permissions are then represented by 9 characters, with each set of 3 representing the permissions for the owner, group and others/users. For example 'rwxrw-r--' would give the owner the ability to do anything, the group the ability to read or write but not execute against, and others/users only the ability to read.
+Permissions may also be represented numerically, where each set of 3 is added together to represent the owner, group and other/users, and where the values of 4, 2 and 1 are assigned to r, w and x, respectively. Using the above example of 'rwxrw-r--' would result in 764.
+You may change permissions using the chmod command. Examples include 'chmod +x file' and 'chmod 644 file'
+You may change ownership using the chown command. An example of this is 'chown me:group file'
 
  
 #Given a file, write a command sequence in Linux to find the count of each word. (hint - we are not looking for a simple word count of the whole file, rather how many times each word occurs)
+sed s/' '/\\n/g test | sort | uniq -c | sort -nr
 
- 
 
 #What do you do when someone tells you x is slow on a host?
+In my response, when using 'X,' I am referring to a task or process.
+
+I've been handling these types of requests or tickets my entire career. Over time, I've naturally created a general flow that I follow. I've never really put it into words or writing, so this is an interesting exercise.
+Ask questions > Gather info > Compare > Check for bottlenecks > Resolve or make recommendation(s)
+Now I will break down each of these into more detail.
+
+Ask questions:
+It's almost always the case that more clarification is helpful. What does "slow" mean in your context? What specific X is slow? How does X work (generalities such as what resources does it rely on, where does it run, how often, etc.)? When did you begin noticing this slowness? Does X have it's own logs, and if yes where are they located? So on.
+
+Gather info:
+top, iostat, df, vmstat, lsof, tcpdump, free, sar, last, dmesg, netstat, etc.
+Check logs - /var/log/, X logs if provided
+Check for dependencies - does X rely on an external service or DB, is the network running as expected (often need to check with Networking team here, if siloed), etc.
+
+Compare:
+Compare the above findings from the period of reported slowness to a period of normal operations. Are there any obvious outliers? Drive down if so.
+
+Check for bottlenecks:
+In addition to all of the above, use various internal monitoring tools to look for bottlenecks. Work with cross-functional teams to check their services/infra (DB, networking, etc.). If the requester is the service owner (programmer) engage with him or her to analyze code performance, if not, engage the appropriate owner for the same.
+
+Resolve or make recommendation:
+Is this something I can resolve myself or by working with another team member or cross-functional team? If yes, do that.
+If no, why not? Document that and share findings/recommendations with appropriate team or leadership. Examples here may be "this is unavoidable unless we scale," "Y is the problem with X, but I dont' have permissions to fix that so here is what I recommend," "we're in production hours right now so can't take the necessary steps to resolve until off-peak," etc.
 
 
 #If you were designing a new web application environment from the ground up, what kind(s) of hardware, OS, applications, storage, network, etc. would you use, and why?
+First and foremost, I would need to know more. What kind of web app is being built/what is the specific purpose of your site? Who is your auidience/target customer? How many users are expected? What type of content will the site be serving? Are there any data retention, data governance, etc. requirements? Do you have specific disaster recovery needs? What is your budget? What teams do you have that will be supporting this once operational? etc.
+For the purpose of this exercise, I will asssume a few things:
+- A basic web app serving mostly text and some images
+- Flexible budget with a preference for lowest cost possible
+- Serving customers around the world in the tens of thousands with potential to reach hundreds of thousands
+- Engineers at every level of the tech stack but company is focused on product (i.e. programming), so data center engineers, OS admins, etc. are fewer than programmers
+- No extra controls on data
 
+Hardware:
+I would not use hardware, I would build on AWS for multiple reasons: ability to auto-scale, "pay for what you use" model so lowest possible cost, global infrastructure to serve customers around the world quickly and more efficiently, allow engineers to focus on the product and not have to scale resources to support 1P data center, region/zone infrastructure allows for high availability and quick disaster recovery which would help to reduce downtime to global customers, much quicker new-infra deployment than on-prem, etc.
+
+If it were a requirement to host in first-party/company owned datacenter, I would choose HP & Dell machines for support, product offerings, and familiarity.
+
+The rest of my answer will assume I've chosen AWS and chosen to forego hosting our own data center.
+
+OS:
+Linux. Open source, large community of users, and most customizable.
+
+Web Servers:
+Nginx or Apache as they are broadly used, have a track record of high performance and reliability, and these are the web servers I am familar with (that we have used at the two companies I've worked for).
+
+Application framework:
+I would lean Django due to it's compatibility with Python and this is what has been used in my environments. But I would lean on developers for preference. Node.js is a likely choice as well.
+
+Containerization:
+I would use Docker and Kubernetes to containerize the application for consistency, portability, fault tolerance, and ease of scale and management.
+
+Database:
+I would use a relational database like MySQL for it's reliability in connecting over the internet (global customers) as well as ease of use/management. I would also consider/suggest a fully managed relational db (company is focused on product) like AmazonRDS.
+
+I would also configure cashing since customers are global. Amazon ElastiCache, which would allow for reduced overhead, provides the options of Redis or Memcached.
+
+Storage:
+Amazon S3 object storage given most content is text and images. I would likely configure Intelligent-Tiering for cost efficiencies.
+
+Network:
+Amazon VPC with multiple regions, each with multipe availability zones, for network isolation, speed of delivery to global customers and, most importantly, redundancy.
+CDN for faster content deliver.
+Elastic Load Balancer to distribute traffic.
+
+Other considerations:
+Security/Access - AWS was chosen for it's wide range of available solutions; that would come in handy here with options like IAM, CloudWatch, Key Management Service, CloudTrail and more.
+Monitoring/Logging - outside of AWS provided solutions, I would consider Prometheus, Grafana and Splunk for familiarity and robustness.
+Backup/DR - configure auto-backups within AWS
+CI/CD - Spinnaker, Jenkins
+Terraform - define and configure infastructure requirements for AWS to manage
 
 #Please describe a systems maintenance or operations workflow that you automated?
 #What problem did this solve?
 #What programming languages or tools did you use?
 #What was the outcome?
+I was the overnight SRE at Salesforce for a year or so. With more downtime than my day shift counterparts, I took it upon myself to learn Tableau so that I could import and analyze all sorts of incident data, with the goal of finding incident causation and resolution trends which I could use to identify opportunities to reduce downtime and customer impact.
+
+Ultimately, among other findings, I discovered that (manual) app host restarts (bounces) were the leading resolution action taken for all incidents in our organization. To me, this was on obvious opportunity to get out ahead of incident occurences and reduce impact to customers, but I was surprised auto-restarts had not already been implemented, and confirmed as much after some additional investigating and collaboration with other teams.
+
+I presented these findings to leadershp and offered the solution that we should be rolling our app tier once every three days, a schedule that was landed upon in coordination with our CoreApp team. Leadership agreed, and I set out to automate the task after defining a manual process for our SRE team to execute this in the interim.
+
+Using Python, myself and another engineer wrote code that did the following:
+1. Scraped our internal tooling for "uptime" of all of our app hosts, which we had to filter for gov-cloud specific hosts, on an every-other-hour basis.
+2. Compared that uptime against our defined 3 day threshold.
+3. If lower, do nothing. If equal or higher, create a pipeline and then change case (detailed below).
+4. Create a Spinnaker pipeline to perform a rolling restart of the specified app hosts. Two side notes here:
+        a. I had to create the pipeline (onboard a service) before I could leverage this, going through all internal controls, reviews, etc.
+        b. The link to this pipeline would also be linked to the below referenced change case for anyone to reference.
+5. Integrate our code with our internal ticket management system to auto-create a change case. We also auto-populated all required fields, with some info being scraped from the hosts, some being scraped from our internal tooling, and some being standard, pre-defined values. Additionally, I had worked with our change management team to create a standard, pre-approved change that would be auto-approved and not need to go through the manual change control process.
+6. Once the change case was created, create a post to the appropriate Slack channels detailing the the ticket information as well as which app host(s) were going to be bounced and at what time(s).
+7. Execute the Spinnaker pipeline to perform a rolling restart of the specified app host(s).
+7. Post another Slack message with either a "success" or "failure" notice once the pipeline had finished running. If success, end. If "failure," post additional details including links to the manual judgement if needed.
+
+This ultimately solved a few problems. First, it drastically reduced a large TOIL item for our SRE team. Before this automation, we were spending nearly 15 engineering hours per month on app host restart efforts, now we spend 1 hour or less. Second, while this effort cannot be definitively positively-correleted, as many other incident reduction efforts had been happening in parrallel, our YoY incident count has reduced since this was implemented and we've had zero incidents resolved by an app host restart. This has a direct impact on our SLAs to customers as it has increased our availability and reduced downtime/impact.
+
+Additionally, while at the beginning we were getting multiple changes/restarts per day, this has slowly reduced to a handful per month over time, indicating that this automation has all but eliminated the problem of app hosts being up to long, causing various system performance issues.
+
+After a month or so had passed to allow proof, I then documented the process in Confluence and wrote up my findings/analysis, automation actions, and outcomes, and shared all of this, along with a link to the Confluence documentation, to our leadership team and org as a whole as a win for SRE team and our customers (reduced downtime/impact).
+
+Tools/technologies used:
+Python
+VSCode
+Linux
+Spinnaker
+Git and GitHub
+Kubernetes
+AWS and first party infra
+Internally built monitoring and data collection tools
+Slack
+GUS (our internal Salesforce instance), used for ticket management, CRM and more
+Confluence (to document the process)
+
